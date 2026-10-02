@@ -1,450 +1,827 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale= 1.0">
-  <title>Portal Oficial - Baba do KBÇA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07111f">
+  <meta name="description" content="Portal Oficial do Baba do KBÇA — futebol, resenha, jogadores, mídia e retrospectiva.">
+  <title>Baba do KBÇA | Portal Oficial</title>
   <link rel="icon" type="image/jpg" href="brasão.jpg">
 
   <style>
-    
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800&display=swap');
+
+    :root {
+      --bg: #050914;
+      --panel: rgba(10, 21, 37, .78);
+      --panel-2: rgba(14, 30, 51, .72);
+      --line: rgba(105, 188, 255, .20);
+      --text: #f4f8ff;
+      --muted: #9fb2c9;
+      --cyan: #36d9ff;
+      --blue: #3178ff;
+      --green: #38e89a;
+      --yellow: #ffd84d;
+      --danger: #ff6b7a;
+      --shadow: 0 22px 70px rgba(0,0,0,.42);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      background-image: url("historia-de-futebol_890746-56035.jpg");
-      background-size: cover;
-      color: white;
-      font-family: Arial, sans-serif;
+      color: var(--text);
+      font-family: Inter, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(49,120,255,.20), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(54,217,255,.12), transparent 24%),
+        linear-gradient(rgba(3,8,18,.86), rgba(3,8,18,.94)),
+        url("historia-de-futebol_890746-56035.jpg") center/cover fixed;
+      min-height: 100vh;
     }
 
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 15px;
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black, transparent 85%);
+      z-index: -1;
     }
 
-    h2,h3 {
-      text-align: center;
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+
+    .container { width: min(1180px, calc(100% - 30px)); margin: auto; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(4, 10, 20, .78);
+      border-bottom: 1px solid var(--line);
     }
 
-    img {
-      width: 100%;
-      max-width: 100%;
-      height: auto;
+    .nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: Orbitron, sans-serif;
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+
+    .brand img {
+      width: 44px;
+      height: 44px;
+      object-fit: cover;
+      border-radius: 13px;
+      border: 1px solid rgba(54,217,255,.55);
+      box-shadow: 0 0 24px rgba(54,217,255,.18);
+    }
+
+    .brand small {
       display: block;
-      margin: 15px auto;
-      border-radius: 6px;
+      color: var(--cyan);
+      font-family: Inter, sans-serif;
+      font-size: 10px;
+      letter-spacing: .22em;
+      margin-top: 3px;
     }
 
-    button {
-      background-color: white;
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a, .btn {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.045);
+      padding: 10px 14px;
+      border-radius: 12px;
+      color: #dcecff;
+      font-weight: 700;
+      font-size: 13px;
+      transition: .25s ease;
+    }
+
+    .nav-links a:hover, .btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(54,217,255,.65);
+      background: rgba(54,217,255,.10);
+      box-shadow: 0 8px 25px rgba(54,217,255,.10);
+    }
+
+    .hero {
+      padding: 70px 0 35px;
+      display: grid;
+      grid-template-columns: 1.35fr .65fr;
+      gap: 25px;
+      align-items: stretch;
+    }
+
+    .hero-main {
+      position: relative;
+      overflow: hidden;
+      min-height: 390px;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: clamp(28px, 5vw, 58px);
+      background:
+        linear-gradient(125deg, rgba(7,18,33,.96), rgba(9,26,47,.68)),
+        url("historia-de-futebol_890746-56035.jpg") center/cover;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-main::after {
+      content: "⚽";
+      position: absolute;
+      right: -20px;
+      bottom: -65px;
+      font-size: 250px;
+      opacity: .055;
+      transform: rotate(-18deg);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid rgba(56,232,154,.28);
+      background: rgba(56,232,154,.07);
+      color: var(--green);
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 18px 0 12px;
+      font-family: Orbitron, sans-serif;
+      font-size: clamp(38px, 7vw, 76px);
+      line-height: .98;
+      letter-spacing: -.045em;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #fff, var(--cyan), #8aaeff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 680px;
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--blue), #3ed8ff);
+      color: #03101e;
       border: none;
-      padding: 6px 10px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-left: 8px;
-      border-radius: 4px;
+      box-shadow: 0 10px 35px rgba(49,120,255,.25);
     }
 
-    button:hover {
-      background-color: #FDD835;
+    .hero-side {
+      display: grid;
+      gap: 14px;
+    }
+
+    .status-card, .card {
+      background: linear-gradient(145deg, rgba(13,27,46,.88), rgba(7,17,31,.78));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .status-card { padding: 24px; }
+
+    .status-label {
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .status-date {
+      margin: 10px 0;
+      font-family: Orbitron, sans-serif;
+      font-size: 25px;
+    }
+
+    .status-date span { color: var(--cyan); }
+
+    .live {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .live i {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 14px var(--green);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse { 50% { opacity: .3; transform: scale(.75); } }
+
+    .next-match {
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .next-match::before {
+      content: "";
+      position: absolute;
+      inset: auto -30px -55px auto;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: rgba(49,120,255,.18);
+      filter: blur(10px);
+    }
+
+    .next-match strong {
+      display: block;
+      font-family: Orbitron, sans-serif;
+      font-size: 27px;
+      margin: 8px 0;
+    }
+
+    .section { padding: 28px 0; }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px;
+      margin-bottom: 16px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-family: Orbitron, sans-serif;
+      font-size: clamp(21px, 3vw, 30px);
+    }
+
+    .section-head p { margin: 5px 0 0; color: var(--muted); }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 18px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 18px;
+    }
+
+    .card { padding: 22px; }
+
+    .media-card {
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .media-card .media-body { padding: 18px; }
+
+    .media-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+      border-bottom: 1px solid var(--line);
+    }
+
+    video {
+      width: 100%;
+      display: block;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      background: #02050a;
+      border: 0;
+    }
+
+    audio { width: 100%; margin-top: 12px; }
+
+    .tag {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: rgba(54,217,255,.09);
+      color: var(--cyan);
+      border: 1px solid rgba(54,217,255,.2);
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .card h3 { margin: 12px 0 8px; line-height: 1.35; }
+    .muted { color: var(--muted); line-height: 1.65; }
+
+    .capa {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #07101d;
+    }
+
+    .capa img {
+      width: 100%;
+      max-height: 760px;
+      object-fit: contain;
+      display: block;
+      margin: auto;
+    }
+
+    .source { color: var(--muted); font-size: 12px; margin: 10px 0 0; }
+
+    .team-tool {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
     }
 
     input {
-      padding: 6px;
-      width: 70%;
-      max-width: 300px;
-    }
-
-    a {
-      color: black;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    ol li {
-      margin-bottom: 6px;
-    }
-    
-    video{
-      border: 8px solid yellow;
-    }
-
-    h1{
-      font-family: Arial;
-      font-size: 40pt;
-      color: white;
-      text-shadow: 2px 2px 2px black;
-    }
-    img{
-      border: 8px solid yellow;
-    }
-    button{
-      font-size: 15pt;
-    }
-
-    #bloco{
-      width: 100px;
-      height: 60px;
-      background-color: black;
-      position: relative;
-      animation: mover 10s infinite alternate;
-    }
-
-    @keyframes mover{
-      from{left: 20px;}
-      to{left: 700px}
-    }
-    
-  </style>
-  
-  <style>
-  .video-box{
-    max-width: 1000px;
-    margin: auto;
-  }
-
-  .videos-lado{
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    align-items: flex-start;
-    flex-wrap: nowrap; /* força ficar lado a lado */
-  }
-
-  .video-item{
-    width: 50%;
-    text-align: center;
-  }
-
-  .video-item video{
-    width: 100%;
-    height: 260px;
-    object-fit: cover;
-    border-radius: 12px;
-    border: 2px solid #fff;
-    display: block;
-  }
-
-  /* No celular quebra (fica um embaixo do outro) */
-  @media (max-width: 700px){
-    .videos-lado{
-      flex-wrap: wrap;
-    }
-    .video-item{
       width: 100%;
+      border: 1px solid var(--line);
+      outline: none;
+      border-radius: 13px;
+      padding: 14px 15px;
+      color: white;
+      background: rgba(0,0,0,.25);
     }
-  }
-</style>
 
+    input:focus {
+      border-color: rgba(54,217,255,.65);
+      box-shadow: 0 0 0 4px rgba(54,217,255,.08);
+    }
+
+    .result {
+      margin-top: 15px;
+      padding: 15px;
+      border-radius: 14px;
+      background: rgba(54,217,255,.06);
+      border: 1px solid rgba(54,217,255,.12);
+      text-align: center;
+      color: #dff8ff;
+    }
+
+    .payment {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .metric {
+      padding: 18px;
+      border-radius: 17px;
+      background: rgba(255,255,255,.035);
+      border: 1px solid var(--line);
+    }
+
+    .metric small { color: var(--muted); display: block; }
+    .metric strong { display: block; margin-top: 7px; font-size: 20px; }
+
+    .players {
+      margin: 0;
+      padding-left: 25px;
+    }
+
+    .players li {
+      margin: 7px 0;
+      padding: 9px;
+      border-radius: 10px;
+      background: rgba(255,255,255,.025);
+    }
+
+    .players button {
+      float: right;
+      border: 1px solid rgba(255,107,122,.28);
+      color: #ff9ba6;
+      background: rgba(255,107,122,.07);
+      border-radius: 8px;
+      padding: 5px 8px;
+      cursor: pointer;
+    }
+
+    .debt {
+      border-color: rgba(255,107,122,.25);
+      background: linear-gradient(145deg, rgba(45,15,24,.65), rgba(10,17,29,.8));
+    }
+
+    .debt-list {
+      color: #ffb0b8;
+      line-height: 2;
+    }
+
+    .developer {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .developer img {
+      width: 86px;
+      height: 86px;
+      object-fit: cover;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 35px 0 55px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .footer-brand {
+      font-family: Orbitron, sans-serif;
+      color: var(--text);
+      margin-bottom: 7px;
+    }
+
+    .notice {
+      padding: 14px 17px;
+      border-left: 3px solid var(--yellow);
+      background: rgba(255,216,77,.06);
+      color: #e8eaf0;
+      border-radius: 10px;
+      line-height: 1.6;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 18px;
+    }
+
+    @media (max-width: 850px) {
+      .hero, .grid-3, .payment { grid-template-columns: 1fr; }
+      .grid-2, .video-grid { grid-template-columns: 1fr; }
+      .nav-links a { display: none; }
+      .hero { padding-top: 35px; }
+    }
+
+    @media (max-width: 560px) {
+      .container { width: min(100% - 20px, 1180px); }
+      .hero-main { min-height: 0; padding: 28px 22px; border-radius: 22px; }
+      .hero-actions .btn { width: 100%; text-align: center; }
+      .team-tool { grid-template-columns: 1fr; }
+      .developer { align-items: flex-start; flex-direction: column; }
+      h1 { font-size: 42px; }
+    }
+  </style>
 </head>
 
-<body style="padding: 10px;">
-
-  <div id="interface"/>
-    <header id="cabecalho"/>
-    <hgroup>
-
-    <h1 align="left;">BABA DO KBÇA – <i>Venha desopilar!</i></h1>
-      
-    <div>
-      <header>
-        <rgroup>
-          <button><a href="https://drive.google.com/drive/folders/1BF9-v6GhAvsQEEFSLKv13zgKu5guTX3_?usp=sharing">Vídeos</a></button>
-          <button><a href="https://drive.google.com/drive/folders/1rCG8jPpdhhgKQcWkDkhqI4nx2ZU2hanP?usp=sharing">Imagens</a></button>
-          <button><a href="https://drive.google.com/drive/folders/1ISKg4kCWBBDmCLirDKDAiymisqp9gDo6?usp=sharing">Audios</a></button>
-          <br><br>
-        </rgroup>
-      </header>
-    </div>
-
-    <div id="bloco" style="text-align: center; color: white;">
-      
-      <img src="Soccer_Kick2.gif" width ="100" height = "50">
-    
-    </div>
-
-    <br><br><br>
-
-      <h3 style="text-align: right; font-family: Times New Roman; font-size: 20pt; color: yellow; text-shadow: 2px 2px 2px black;">
-        Seja bem-vindo ao Portal Oficial - Baba do KBÇA! 😎<br>
-        Aqui tem foto da capa pra registrar os heróis do dia.<br>
-        Tem áudios de resenha: zoação liberada e sem direito a apelação! 😂<br>
-        E tem vídeos de destaques, pra ninguém dizer “foi sorte”! 🔥⚽</h3><br>
-
-<div>
-  <header>
-    <hgroup>
-      
-      <h2 style="text-align: left;">Qual o seu time brasileiro:</h2>
-      
-      <input type="text" id="palavra" style="font-size: 15pt;" placeholder="Ex: Vasco, Botafogo, Palmeiras,...">
-      <button onclick="verificar()" style="color: black">Verificar</button><br><br><br>
-      
-      <hr>
-      
-      <p id="resultado" style="font-family: Times New Roma; 
-        font-size: 17pt; 
-        text-shadow: 2px 2px 2px black;
-        text-align: center;">"A relação entre você e seu time sairá aqui."</p>
-      
-      <hr>
-      
-      <script>
-        function verificar(){
-          const p = document.getElementById("palavra").value;
-          
-          if(p == "Flamengo"){
-            document.getElementById("resultado").innerHTML = "Você é Urubu de Cabeça Preta.";
-          } else if(p == "Vasco"){
-            document.getElementById("resultado").innerHTML = "Você é Almirante, um navegador Português.";
-          } else if(p == "Botafogo"){
-            document.getElementById("resultado").innerHTML = "Você é Manequinho, um grande Biriba.";
-          } else if (p == "Palmeiras"){
-            document.getElementById("resultado").innerHTML = "Você era um Periquito, hoje é um Porco Gobbato.";
-          } else{
-            document.getElementById("resultado").innerHTML = "Você é um Zé da Bola.";
-          }
-        }
-      
-      </script>
-    </hgroup>
-  </header>
-</div>
-    
-      <img src="brasão.jpg" align="left" style="width:40%; max-width: 160px; height:auto;" alt="Brasão do Baba">
-      <br><br><br><br><br><br><br><br>
-
-    <h2 style="font-size: 20pt; text-shadow: 2px 2px 2px black;"><b>CAPA DA SEMANA:</b> Esquadrão Azul Vitorioso 🚀🔵.</h2>
-      
-    <div align="center">
-
-      <img src="capa_da_semana_11032026.png" style="width: 800px; height: 950px; margin-top: 10px">
-    
-    </div>
-      
-      <p style="text-align: center;"><b>Fonte:</b> Eduardo.</p>
-      
-      <br>
-      
-      <h2 style="text-align: left; text-shadow: 2px 2px 2px black;">Assista aos Jogos do Brasileirão: 
-        <a href="https://futebolplayhdd.com.br/?jogo=esportesbr" allow="encrypted-media" allowfullscreen frameborder="0" width="100%" height="100%" 
-          style="color: yellow;"> Clique aqui e divirta-se.</a></h2>
-      
-      <h2 style="text-align: left; text-shadow: 2px 2px 2px black;">Faça suas Apostas Esportivas, Jogos de Hoje: 
-        <a href="https://betnacional.bet.br/indique/94PYEQ" allow="encrypted-media" allowfullscreen frameborder="0" width="100%" height="100%" 
-          style="color: yellow;"> Clique aqui e ganhe o extra.</a></h2>
-      <br>
-      <hr>
-
-    <h2 style="text-align:center; text-shadow: 2px 2px 2px black;">
-      <b>Jogos do baba todas as quartas-feiras </b><strong>- 19:00 às 20:30</strong>
-    </h2>
-
-    <h2 align="center" style="text-shadow: 2px 2px 2px black;">
-      <br>Valor por atleta: <b>R$ 10,00</b><br>
-      <br>Chave PIX:<b> 74988182530</b> – Fabrício Fagner
-    </h2>
-
-    <h2 align="center" style="text-shadow: 2px 2px 2px black;">
-      <a href="https://nubank.com.br/cobrar/jn02b/6977f464-5163-40b2-b4cf-9c7233673301" target="_blank" style="color: yellow;">
-        Ou clique aqui para efetuar o pagamento!<br></a></b><br>
-    </h2>
-      
-    </hgroup>
-    </header>
+<body>
+  <div class="topbar">
+    <nav class="nav container">
+      <a class="brand" href="#">
+        <img src="brasão.jpg" alt="Brasão do Baba do KBÇA">
+        <span>BABA DO KBÇA<small>PORTAL OFICIAL</small></span>
+      </a>
+      <div class="nav-links">
+        <a href="#capa">Capa</a>
+        <a href="#jogadores">Jogadores</a>
+        <a href="#midia">Mídia</a>
+        <a href="#retrospectiva">Retrospectiva</a>
+      </div>
+    </nav>
   </div>
 
-    <div style="text-align:center;">
-      <input type="text" style="font-size: 17pt;" id="nome" placeholder="Digite seu nome..."
-             onkeypress="if(event.key==='Enter'){adicionar()}">
-      <button onclick="adicionar()" style="color: black; font-size: 19pt;">Enviar</button>
+  <main class="container">
+    <section class="hero">
+      <div class="hero-main">
+        <span class="eyebrow"><span>●</span> Futebol • Resenha • Resenha</span>
+        <h1>BABA DO<br><span class="gradient-text">KBÇA</span></h1>
+        <p>
+          Venha desopilar! Um espaço para registrar os jogos, os personagens,
+          as defesas impossíveis, os gols, as resenhas e tudo aquilo que acontece
+          antes, durante e depois do baba.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#jogadores">⚡ Entrar na lista</a>
+          <a class="btn" href="#midia">▶ Ver destaques</a>
+          <a class="btn" href="https://drive.google.com/drive/folders/1BF9-v6GhAvsQEEFSLKv13zgKu5guTX3_?usp=sharing" target="_blank">🎬 Vídeos</a>
+          <a class="btn" href="https://drive.google.com/drive/folders/1rCG8jPpdhhgKQcWkDkhqI4nx2ZU2hanP?usp=sharing" target="_blank">📸 Imagens</a>
+        </div>
+      </div>
+
+      <div class="hero-side">
+        <div class="status-card">
+          <div class="status-label">Último baba registrado</div>
+          <div class="status-date">30/09/2026 <span>• QUARTA</span></div>
+          <div class="live"><i></i> HISTÓRICO ATUALIZADO</div>
+        </div>
+
+        <div class="status-card next-match">
+          <div class="status-label">Próximo encontro</div>
+          <strong>07/10/2026</strong>
+          <div class="muted">Quarta-feira • 19:00 às 20:30</div>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#jogadores">Confirmar presença</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="capa">
+      <div class="section-head">
+        <div>
+          <h2>📸 Capa da semana</h2>
+          <p>O registro oficial dos heróis do dia.</p>
+        </div>
+        <span class="tag">Esquadrão Azul</span>
+      </div>
+      <div class="capa">
+        <img src="capa_da_semana_11032026.png" alt="Capa da semana — Esquadrão Azul Vitorioso">
+      </div>
+      <p class="source"><b>Fonte:</b> Eduardo.</p>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>⚽ Central do baba</h2>
+          <p>Informações rápidas para a próxima rodada.</p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <span class="tag">Agenda</span>
+          <h3>Jogos todas as quartas-feiras</h3>
+          <p class="muted">19:00 às 20:30 • Último baba: <b>30/09/2026</b> • Próximo: <b>07/10/2026</b>.</p>
+        </div>
+
+        <div class="card">
+          <span class="tag">Acesso rápido</span>
+          <h3>Mídia da galera</h3>
+          <p class="muted">Fotos, vídeos e áudios ficam organizados nos arquivos oficiais.</p>
+          <div class="hero-actions">
+            <a class="btn" href="https://drive.google.com/drive/folders/1rCG8jPpdhhgKQcWkDkhqI4nx2ZU2hanP?usp=sharing" target="_blank">📷 Imagens</a>
+            <a class="btn" href="https://drive.google.com/drive/folders/1ISKg4kCWBBDmCLirDKDAiymisqp9gDo6?usp=sharing" target="_blank">🎙️ Áudios</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="jogadores">
+      <div class="section-head">
+        <div>
+          <h2>🧑‍🤝‍🧑 Lista de jogadores</h2>
+          <p>Digite seu nome e confirme presença no próximo baba.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="team-tool">
+          <input type="text" id="nome" placeholder="Digite seu nome..." autocomplete="name"
+                 onkeypress="if(event.key==='Enter'){adicionar()}">
+          <button class="btn btn-primary" onclick="adicionar()">+ Confirmar</button>
+        </div>
+        <ol id="lista" class="players"></ol>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="grid-2">
+        <div class="card">
+          <span class="tag">Torcida</span>
+          <h3>Qual é o seu time brasileiro?</h3>
+          <div class="team-tool">
+            <input type="text" id="palavra" placeholder="Ex.: Vasco, Botafogo, Palmeiras...">
+            <button class="btn btn-primary" onclick="verificar()">Verificar</button>
+          </div>
+          <div class="result" id="resultado">A relação entre você e seu time sairá aqui.</div>
+        </div>
+
+        <div class="card">
+          <span class="tag">Pagamento</span>
+          <h3>R$ 10,00 por atleta</h3>
+          <div class="payment">
+            <div class="metric"><small>PIX</small><strong>74988182530</strong></div>
+            <div class="metric"><small>Responsável</small><strong>Fabrício Fagner</strong></div>
+            <div class="metric"><small>Pagamento</small><strong><a href="https://nubank.com.br/cobrar/jn02b/6977f464-5163-40b2-b4cf-9c7233673301" target="_blank">Abrir PIX ↗</a></strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="card">
+        <span class="tag">Aviso da organização</span>
+        <h3>⚠️ Resenha financeira</h3>
+        <div class="notice">
+          Ao final de cada semana, os participantes que não realizarem o pagamento
+          serão listados como inadimplentes, ainda que isso contrarie o princípio
+          da presunção de inocência previsto na CF/88. 😎👍<br>
+          <b>"Aqui, nós somos a LEI!" 😂</b>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="grid-2">
+        <div class="card">
+          <span class="tag">Créditos</span>
+          <h3>Atletas com créditos</h3>
+          <p class="muted"><b>Nenhum atleta registrado.</b></p>
+        </div>
+
+        <div class="card debt">
+          <span class="tag">Pendências</span>
+          <h3>Inadimplentes</h3>
+          <div class="debt-list">
+            <b>Aglailton</b> — Baba 11/02/2026<br>
+            <b>Jucelino</b> — Babas 25/02/2026, 11/03/2026<br>
+            <b>Talisson</b> — Baba 04/03/2026<br>
+            <b>Pedrinho</b> — Babas 04/03/2026, 11/03/2026<br>
+            <b>Erick</b> — Baba 11/03/2026
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="midia">
+      <div class="section-head">
+        <div>
+          <h2>🎙️ Bastidores</h2>
+          <p>A resenha também entra para a história.</p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <span class="tag">Áudio</span>
+          <h3>"Juan" cantou a pedra</h3>
+          <audio controls><source src="Juan_avisou.ogg"></audio>
+        </div>
+        <div class="card">
+          <span class="tag">Áudio</span>
+          <h3>Franklin compareceu</h3>
+          <audio controls><source src="Franklin_foi_mesmo_morto.ogg"></audio>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>🔥 Vídeos destaque</h2>
+          <p>Defesas, gols e lances que merecem replay.</p>
+        </div>
+      </div>
+
+      <div class="video-grid">
+        <div class="card media-card">
+          <video controls><source src="Goleiroxgoleiro.mp4" type="video/mp4"></video>
+          <div class="media-body"><span class="tag">14/01/2026</span><h3>Goleiros em X1: Cabeça saiu na frente.</h3></div>
+        </div>
+
+        <div class="card media-card">
+          <video controls><source src="defesadefalta.mp4" type="video/mp4"></video>
+          <div class="media-body"><span class="tag">28/01/2026</span><h3>Nehu defendeu a falta cobrada pelo time laranja.</h3></div>
+        </div>
+
+        <div class="card media-card">
+          <video controls><source src="defesaextraordinaria.mp4" type="video/mp4"></video>
+          <div class="media-body"><span class="tag">28/01/2026</span><h3>Uma defesa da miséria. Veja!</h3></div>
+        </div>
+
+        <div class="card media-card">
+          <video controls><source src="millerfeznorebote.mp4" type="video/mp4"></video>
+          <div class="media-body"><span class="tag">28/01/2026</span><h3>Miller aproveitou o rebote.</h3></div>
+        </div>
+
+        <div class="card media-card">
+          <video controls><source src="O_gol_de_Erik.mp4" type="video/mp4"></video>
+          <div class="media-body"><span class="tag">NOVO • 04/02/2026</span><h3>Erik mandou no canto… e o goleiro Nehu foi buscar a dignidade. 😂</h3></div>
+        </div>
+
+        <div class="card media-card">
+          <video controls><source src="O_goleiro_nehu_e_a_pedrada.mp4" type="video/mp4"></video>
+          <div class="media-body"><span class="tag">NOVO • 04/02/2026</span><h3>O goleiro Nehu e a pedrada! ⚽💥</h3></div>
+        </div>
+
+        <div class="card media-card">
+          <video controls><source src="Nehu_surpreende_novamente.mp4" type="video/mp4"></video>
+          <div class="media-body"><span class="tag">NOVO • 04/02/2026</span><h3>De falta, Nehu surpreende novamente.</h3></div>
+        </div>
+
+        <div class="card media-card">
+          <video controls><source src="Ju_marcou_sem_brincadeira.mp4" type="video/mp4"></video>
+          <div class="media-body"><span class="tag">NOVO • 04/02/2026</span><h3>Jucelino chegou sério e deixou Nehu na saudade. ⚽</h3></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="retrospectiva">
+      <div class="section-head">
+        <div>
+          <h2>🕰️ Retrospectiva</h2>
+          <p>Momentos que já entraram para a história do Baba do KBÇA.</p>
+        </div>
+      </div>
+      <div class="card media-card">
+        <img src="ultimode2025.jpeg" alt="Último jogo de 2025">
+        <div class="media-body">
+          <span class="tag">17/12/2025</span>
+          <h3>Último jogo de 2025 — um misto dos times!</h3>
+          <p class="source"><b>Fonte:</b> Desconhecida.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="card developer">
+        <img src="autor.jpeg" alt="Autor do portal">
+        <div>
+          <span class="tag">Desenvolvedor</span>
+          <h3>Prof. Jauahallau-nehu E. C. da Silva</h3>
+          <p class="muted">
+            Extensão Universitária em Matemática @UFG • Técnico em Segurança Pública @ACIDES-PE •
+            Acadêmico em Engenharia Civil @IFSertão-PE • Graduado em Tecnologia de Segurança Pública @UNIASSELVI •
+            Licenciado em Física @IFSertão-PE • Especialista em Educação @UNIVASF • Mestrando em Ensino @PPGENS/UNIVASF
+          </p>
+          <p><a class="btn" href="http://lattes.cnpq.br/7937554732309732" target="_blank">Currículo Lattes ↗</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-brand">BABA DO KBÇA</div>
+      <div>Venha desopilar! ⚽ • Último baba: 30/09/2026 • Próximo: 07/10/2026</div>
     </div>
-  <br><br>
+  </footer>
 
-  <h2 style="text-align: left; text-shadow: 2px 2px 2px black;">Lista de Jogadores (Baba - 18/03/2026):</h2>
-    <ol id="lista" style="font-size: 18pt; text-shadow: 2px 2px 2px black;"></ol><br>
-  
-  <h2 style="text-align: center; text-shadow: 2px 2px 2px black;"><i>ATENÇÃO:<br> 
-    Ao final de cada semana, os participantes que não realizarem o pagamento serão listados como inadimplentes, 
-    ainda que isso contrarie o princípio da presunção de inocência previsto na CF/88. 😎👍<br>
-    "Aqui, nós somos a LEI!"</i>😂👍</h2>
-  <br>
-  
-  <h2 style="text-align: left; text-shadow: 2px 2px 2px black;">Atletas com créditos:</h2>
-  <p style="font-size: 15pt;
-    color: yellow; text-shadow: 2px 2px 2px green;">
-    <b>Sem atletas!</b>
-  </p><br>
-  
-  <hr>
-  <h2 style="text-shadow: 2px 2px 2px black;"> Inadimplentes: </h2>
-  <p style="text-align: center;
-    font-size: 15pt;">
-    <mark>
-      
-    <strong>Aglailton (Baba - 11/02/2026)</strong><br>
-      <strong>Jucelino (Babas - 25/02/2026, 11/03/2026)</strong><br>
-      <strong>Talisson (Baba - 04/03/2026)</strong><br>
-      <strong>Pedrinho (Babas - 04/03/2026, 11/03/2026)</strong><br>
-      <strong>Erick (Baba - 11/03/2026)</strong>
-      
-    </mark>
-    </b>
-  </p>
-  
-  <br>
-  <hr>
+  <script>
+    function verificar() {
+      const p = document.getElementById("palavra").value.trim().toLowerCase();
+      const resultado = document.getElementById("resultado");
 
-  <div id="tv-radio">
-    <header>
-      
-      <hgroup align="center">
-        <h2>Nos bastidores do baba… "Juan" cantou a pedra:</h2>
-        <audio id="destaque" controls="controls">
-          <source src="Juan_avisou.ogg"/>
-        </audio>
-      </hgroup>
-      <br>
-      
-      <hgroup align="center">
-        <h2>Sem energia, sem bateria… mas com presença. Franklin compareceu. (Bastidores):</h2>
-        <audio id="destaque1" controls="controls">
-          <source src="Franklin_foi_mesmo_morto.ogg"/>
-        </audio>
-      </hgroup>
-  
-      <br>
-      <hr>
-      
-    </header>
-  </div><br>
-  
-<div class="video-box">
-  <div class="videos-lado">
-    <div class="video-item">
-      <h3>VIDEO DESTAQUE: Os goleiros entraram em X1 e o goleiro "Cabeça" saiu na frente, defendeu. Padrão! (14/01/2026)</h3>
+      const respostas = {
+        "flamengo": "Você é Urubu de Cabeça Preta. 🦅",
+        "vasco": "Você é Almirante, um navegador Português. ⚓",
+        "botafogo": "Você é Manequinho, um grande Biriba. ⭐",
+        "palmeiras": "Você era um Periquito, hoje é um Porco Gobbato. 🐷"
+      };
 
-      <video id="destaque1" controls>
-        <source src="Goleiroxgoleiro.mp4" type="video/mp4">
-        Seu navegador não suporta vídeo.
-      </video>
-    </div>
+      resultado.textContent = respostas[p] || "Você é um Zé da Bola. ⚽😂";
+    }
+  </script>
 
-    <div class="video-item">
-      <h3>VIDEO DESTAQUE: O goleiro "Nehu" defendeu a falta cobrada, do time laranja. (28/01/2026)</h3>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+    import {
+      getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy
+    } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
-      <video id="destaque2" controls>
-        <source src="defesadefalta.mp4" type="video/mp4">
-        Seu navegador não suporta vídeo.
-      </video>
-    </div>
-  </div>
-</div>
-
-<div class="video-box">
-  <div class="videos-lado">
-    <div class="video-item">
-      <h3>VIDEO DESTAQUE: O goleiro "Nehu" fez uma defesa da miséria. Veja! (28/01/2026)</h3>
-
-      <video id="destaque2" controls>
-        <source src="defesaextraordinaria.mp4" type="video/mp4">
-        Seu navegador não suporta vídeo.
-      </video>
-    </div>
-
-    <div class="video-item">
-      <h3>VIDEO DESTAQUE: O jogador "Miller" aproveitou o rebote do goleiro "Nehu", marcou. "Andrei" deixou "Miller" avontade! (28/01/2026)</h3>
-
-      <video id="destaque2" controls>
-        <source src="millerfeznorebote.mp4" type="video/mp4">
-        Seu navegador não suporta vídeo.
-      </video>
-    </div>
-  </div>
-</div>
-
-<div class="video-box">
-  <div class="videos-lado">
-    <div class="video-item">
-      <h3>VIDEO DESTAQUE DA SEMANA: "Erik" mandou no canto… e o goleiro "Nehu" foi buscar só a dignidade. 😂 (04/02/2026) <mark><b>Novo</b></mark></h3>
-
-      <video id="destaque2" controls>
-        <source src="O_gol_de_Erik.mp4" type="video/mp4">
-        Seu navegador não suporta vídeo.
-      </video>
-    </div>
-
-    <div class="video-item">
-      <h3>VIDEO DESTAQUE SEMANA: O Goleiro "Nehu" e a Pedrada! ⚽💥 (04/02/2026) <mark><b>Novo</b></mark></h3>
-
-      <video id="destaque2" controls>
-        <source src="O_goleiro_nehu_e_a_pedrada.mp4" type="video/mp4">
-        Seu navegador não suporta vídeo.
-      </video>
-    </div>
-  </div>
-</div>
-
-<div class="video-box">
-  <div class="videos-lado">
-    <div class="video-item">
-      <h3>VIDEO DESTAQUE DA SEMANA: De falta, "Nehu" surpreende todo mundo outra vez. (04/02/2026) <mark><b>Novo</b></mark></h3>
-
-      <video id="destaque2" controls>
-        <source src="Nehu_surpreende_novamente.mp4" type="video/mp4">
-        Seu navegador não suporta vídeo.
-      </video>
-    </div>
-
-    <div class="video-item">
-      <h3>VIDEO DESTAQUE SEMANA: "Jucelino" chegou sério… e deixou Nehu na saudade. ⚽ (04/02/2026) <mark><b>Novo</b></mark></h3>
-
-      <video id="destaque2" controls>
-        <source src="Ju_marcou_sem_brincadeira.mp4" type="video/mp4">
-        Seu navegador não suporta vídeo.
-      </video>
-    </div>
-  </div>
-</div>
-  
-  <br><br>
-  <hr>
-  <br>
-  <div id="interface">
-    <header>
-      <hgroup>
-        <h3><b>RETROSPECTIVA DOS JOGOS:</b> ultimo jogo de 2025, em 17 de dezembro. Um misto dos times!!</h3>
-        <img src="ultimode2025.jpeg" alt="Foto do ultimo jogo de 2025">
-        <p><b>Fonte:</b> Desconhecida.</p>
-      </hgroup>
-    </header>
-  </div><br>
-  <hr>
-  <br>
-  
-<script type="module">
-  // 🔥 Firebase App
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-
-  // 🔥 Firestore (BANCO DE DADOS)
-  import {
-    getFirestore,
-    collection,
-    addDoc,
-    deleteDoc,
-    doc,
-    onSnapshot,
-    query,
-    orderBy
-  } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
-
-  // 🔧 CONFIGURAÇÃO DO SEU PROJETO (ESSA PARTE JÁ ESTÁ CERTA)
-  const firebaseConfig = {
+    const firebaseConfig = {
     apiKey: "AIzaSyAO7XYw-T-DB695phUjTqQE6KT-Gz8ZwQU",
     authDomain: "banco-de-dados-do-site-7a058.firebaseapp.com",
     projectId: "banco-de-dados-do-site-7a058",
@@ -454,84 +831,69 @@
     measurementId: "G-8Y2D89K75D"
   };
 
-  // 🚀 Inicializa Firebase
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const inscritosRef = collection(db, "inscritos");
+    const q = query(inscritosRef, orderBy("timestamp"));
 
-  // 📂 Referência da coleção
-  const inscritosRef = collection(db, "inscritos");
-  const q = query(inscritosRef, orderBy("timestamp"));
+    onSnapshot(q, (snapshot) => {
+      const lista = document.getElementById("lista");
+      lista.innerHTML = "";
 
-  // 👀 LISTA EM TEMPO REAL
-  onSnapshot(q, (snapshot) => {
-    const lista = document.getElementById("lista");
-    lista.innerHTML = "";
-
-    snapshot.forEach((docItem) => {
-      const li = document.createElement("li");
-      li.innerHTML = `
-        ${docItem.data().nome}
-        <button onclick="remover('${docItem.id}')">Excluir</button>
-      `;
-      lista.appendChild(li);
-    });
-  });
-
-  // ➕ ADICIONAR NOME
-  window.adicionar = async function () {
-    const input = document.getElementById("nome");
-    const nome = input.value.trim();
-
-    if (nome === "") {
-      alert("Digite um nome válido!");
-      return;
-    }
-
-    await addDoc(inscritosRef, {
-      nome: nome,
-      timestamp: Date.now()
+      snapshot.forEach((docItem) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <span>${escapeHtml(docItem.data().nome)}</span>
+          <button onclick="remover('${docItem.id}')">Excluir</button>
+        `;
+        lista.appendChild(li);
+      });
     });
 
-    input.value = "";
-  };
-
-  // ❌ REMOVER (COM SENHA)
-  window.remover = async function (id) {
-    const senha = prompt("Digite a senha do administrador:");
-    if (senha === "admin123") {
-      await deleteDoc(doc(db, "inscritos", id));
-    } else {
-      alert("Senha incorreta!");
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
     }
-  };
-</script>
 
-<div>
-  <header>
-  <hgroup>
-    <h5><strong> Desenvolvedor:</strong></h5>
-    <img src="autor.jpeg" style="width: 30%; max-width: 80px; height: auto; margin: 0;" alt="Autor">
-    <style>
-      p{
-        font-family: Arial;
-        font-size: 10pt;
+    window.adicionar = async function () {
+      const input = document.getElementById("nome");
+      const nome = input.value.trim();
+
+      if (!nome) {
+        alert("Digite um nome válido!");
+        return;
       }
-    </style>
-    
-    <p><b>Prof. Jauahallau-nehu E. C. da Silva</b><br>
-      Extensão Universitária Matemática @ufg<br>
-      Técnico em Segurança Pública @acides-pe<br>
-      Acadêmico em Engenharia Civil @ifsertaope<br>
-      Graduado no Curso Superior de Tecnologia em Seguraça Pública @uniasselvi<br>
-      Graduado no Curso Superior de Licenciatura em Física @ifsertaope<br>
-      Pós-graduado (Lato Sensu) Especialista em Educação @univasf<br>
-      Pós-graduando (Stricto Sensu) Mestrando em Ensino @ppgens_univasf</p>
-    <p>Endereço para acessar este CV:
-      <a href="http://lattes.cnpq.br/7937554732309732"> 
-        http://lattes.cnpq.br/7937554732309732</a><br>
-        ID Lattes: 7937554732309732</p>
-  </hgroup>
-  </header>
-</div>
+
+      try {
+        await addDoc(inscritosRef, {
+          nome,
+          timestamp: Date.now()
+        });
+        input.value = "";
+      } catch (error) {
+        console.error(error);
+        alert("Não foi possível registrar o nome. Verifique sua conexão e as regras do Firebase.");
+      }
+    };
+
+    window.remover = async function (id) {
+      const senha = prompt("Digite a senha do administrador:");
+
+      if (senha === "admin123") {
+        try {
+          await deleteDoc(doc(db, "inscritos", id));
+        } catch (error) {
+          console.error(error);
+          alert("Não foi possível excluir o participante.");
+        }
+      } else if (senha !== null) {
+        alert("Senha incorreta!");
+      }
+    };
+  </script>
 </body>
 </html>
