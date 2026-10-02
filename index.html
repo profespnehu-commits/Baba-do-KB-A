@@ -331,6 +331,15 @@
       border-bottom: 1px solid var(--line);
     }
 
+    /* Retrospectiva: mostra a foto inteira, sem cortar topo ou rodapé. */
+    .retrospectiva-card > img {
+      height: auto;
+      max-height: 820px;
+      object-fit: contain;
+      object-position: center;
+      background: #02060d;
+    }
+
     video {
       width: 100%;
       display: block;
@@ -765,7 +774,7 @@
           <p>Momentos que já entraram para a história do Baba do KBÇA.</p>
         </div>
       </div>
-      <div class="card media-card">
+      <div class="card media-card retrospectiva-card">
         <img src="ultimode2025.jpeg" alt="Último jogo de 2025">
         <div class="media-body">
           <span class="tag">17/12/2025</span>
@@ -831,6 +840,10 @@
     measurementId: "G-8Y2D89K75D"
   };
 
+    // IMPORTANTE:
+    // A apiKey do Firebase Web pode aparecer no código do navegador.
+    // A proteção deve ser feita com API restrictions, Firebase Security Rules e App Check.
+    // Não use esta apiKey como senha ou como mecanismo de autorização.
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const inscritosRef = collection(db, "inscritos");
